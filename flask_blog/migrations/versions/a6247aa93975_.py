@@ -84,7 +84,7 @@ def upgrade():
     op.drop_table('index_stats')
     op.drop_table('innodb_table_stats')
     op.drop_table('help_category')
-    op.drop_table('gtid_slave_pos')
+    op.drop_table('gtid_subordinate_pos')
     op.drop_table('db')
     # ### end Alembic commands ###
 
@@ -120,13 +120,13 @@ def downgrade():
     mysql_default_charset=u'utf8',
     mysql_engine=u'MyISAM'
     )
-    op.create_table('gtid_slave_pos',
+    op.create_table('gtid_subordinate_pos',
     sa.Column('domain_id', mysql.INTEGER(display_width=10, unsigned=True), autoincrement=False, nullable=False),
     sa.Column('sub_id', mysql.BIGINT(display_width=20, unsigned=True), autoincrement=False, nullable=False),
     sa.Column('server_id', mysql.INTEGER(display_width=10, unsigned=True), autoincrement=False, nullable=False),
     sa.Column('seq_no', mysql.BIGINT(display_width=20, unsigned=True), autoincrement=False, nullable=False),
     sa.PrimaryKeyConstraint('domain_id', 'sub_id'),
-    mysql_comment=u'Replication slave GTID position',
+    mysql_comment=u'Replication subordinate GTID position',
     mysql_default_charset=u'latin1',
     mysql_engine=u'InnoDB'
     )
@@ -310,7 +310,7 @@ def downgrade():
     sa.Column('Create_tmp_table_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
     sa.Column('Lock_tables_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
     sa.Column('Execute_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
-    sa.Column('Repl_slave_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
+    sa.Column('Repl_subordinate_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
     sa.Column('Repl_client_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
     sa.Column('Create_view_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
     sa.Column('Show_view_priv', mysql.ENUM(u'N', u'Y', charset=u'utf8'), server_default=sa.text(u"'N'"), nullable=False),
